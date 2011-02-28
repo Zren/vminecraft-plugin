@@ -2,7 +2,6 @@ package com.gmail.nossr50;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -10,7 +9,6 @@ import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class mcBlockListener extends BlockListener {
     private final mcMMO plugin;
@@ -45,7 +43,6 @@ public class mcBlockListener extends BlockListener {
         	int y = block.getY();
         	int z = block.getZ();
         	String xyz = x+","+y+","+z;
-    		int type = block.getTypeId();
     		Location loc = block.getLocation();
     		int dmg = event.getDamageLevel().getLevel();
     		/*
@@ -53,26 +50,26 @@ public class mcBlockListener extends BlockListener {
     		 */
     		if(dmg == 3){
         		if(mcPermissions.getInstance().herbalism(player))
-        		mcm.getInstance().herbalismProcCheck(block, player);
+        		mcHerbalism.getInstance().herbalismProcCheck(block, player);
     		}
     		/*
     		 * MINING
     		 */
     		if(dmg == 2 && !mcConfig.getInstance().isBlockWatched(block) && !mcConfig.getInstance().isCoordsWatched(xyz)){
     		if(mcPermissions.getInstance().mining(player))
-    		mcm.getInstance().miningBlockCheck(player, block);
+    		mcMining.getInstance().miningBlockCheck(player, block);
     		/*
     		 * WOOD CUTTING
     		 */
     		if(block.getTypeId() == 17 && mcPermissions.getInstance().woodcutting(player)){    		
-    				mcm.getInstance().woodCuttingProcCheck(player, block, loc);
+    				mcWoodCutting.getInstance().woodCuttingProcCheck(player, block, loc);
     				mcUsers.getProfile(player).addWoodcuttingGather(7);
     		}
     		/*
     		 * EXCAVATION
     		 */
     		if(mcPermissions.getInstance().excavation(player) && block != null && player != null)
-    		mcm.getInstance().excavationProcCheck(block, player);
+    		mcExcavation.getInstance().excavationProcCheck(block, player);
     		/*
     		 * EXPLOIT COUNTERMEASURES
     		 */
