@@ -567,7 +567,7 @@ public class mcCombat {
     		return false;
     }
     public void bleedCheck(Player attacker, Entity x){
-    	if(mcm.getInstance().isSwords(attacker.getItemInHand()) && !mcConfig.getInstance().isBleedTracked(x)){
+    	if(mcPermissions.getInstance().swords(attacker) && mcm.getInstance().isSwords(attacker.getItemInHand()) && !mcConfig.getInstance().isBleedTracked(x)){
 			if(mcUsers.getProfile(attacker).getSwordsInt() >= 50 && mcUsers.getProfile(attacker).getSwordsInt() < 200){
 				if(Math.random() * 10 > 8){
 					mcConfig.getInstance().addBleedTrack(x);
@@ -886,11 +886,9 @@ public class mcCombat {
 			}
 		}
     }
-    public void bleedSimulate(Plugin plugin){
+    public void bleedSimulate(){
         for(Entity x : mcConfig.getInstance().getBleedTracked()){
         	if(x == null)
-        		continue;
-        	if(!mcConfig.getInstance().isBleedTracked(x))
         		continue;
         	if(mcm.getInstance().getHealth(x) <= 0)
         		continue;
@@ -903,7 +901,6 @@ public class mcCombat {
     	    		mcm.getInstance().simulateNaturalDrops(x);
     	    	}
     	    }
-    	    
     	    if(x instanceof Monster){
     	    	Monster monster = (Monster)x;
     	    	if(monster.getHealth() >= 1){

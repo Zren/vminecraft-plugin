@@ -84,6 +84,14 @@ public class mcm {
 			return false;
 		}
 	}
+	public boolean shouldBeWatched(Block block){
+		int id = block.getTypeId();
+		if(id == 21 || id == 15 || id == 14 || id == 56 || id == 38 || id == 37 || id == 39 || id == 40){
+			return true;
+		} else {
+			return false;
+		}
+	}
     public Integer calculateHealth(Integer health, Integer newvalue){
     	if((health + newvalue) > 20){
     		return 20;
@@ -312,39 +320,38 @@ public class mcm {
     	}
     	if(split[0].equalsIgnoreCase("/"+mcLoadProperties.mcc)){
     		event.setCancelled(true);
-    		player.sendMessage(ChatColor.GRAY+"mcMMO has a party system included");
-    		player.sendMessage(ChatColor.GREEN+"~~Commands~~");
+    		player.sendMessage(ChatColor.RED+"---[]"+ChatColor.YELLOW+"mcMMO Commands"+ChatColor.RED+"[]---");
     		if(mcPermissions.getInstance().party(player)){
-    		player.sendMessage(ChatColor.GRAY+"/"+mcLoadProperties.party+" <name> - to join a party");
-    		player.sendMessage(ChatColor.GRAY+"/"+mcLoadProperties.party+" q - to quit a party");
+    			player.sendMessage(ChatColor.GREEN+"--PARTY COMMANDS--");
+    			player.sendMessage("/"+mcLoadProperties.party+" [party name] "+ChatColor.RED+"- Create/Join designated party");
+    			player.sendMessage("/"+mcLoadProperties.party+" q "+ChatColor.RED+"- Leave your current party");
+    			if(mcPermissions.getInstance().partyChat(player))
+    				player.sendMessage("/p "+ChatColor.RED+" - Toggle Party Chat");
+    			player.sendMessage("/"+mcLoadProperties.invite+" [player name] "+ChatColor.RED+"- Send party invite");
+    			player.sendMessage("/"+mcLoadProperties.accept+" "+ChatColor.RED+"- Accept party invite");
+    			if(mcPermissions.getInstance().partyTeleport(player))
+    				player.sendMessage("/"+mcLoadProperties.ptp+" [party member name] "+ChatColor.RED+"- Teleport to party member");
     		}
-    		if(mcPermissions.getInstance().partyTeleport(player))
-    		player.sendMessage(ChatColor.GRAY+"/"+mcLoadProperties.ptp+" <name> - party teleport");
-    		if(mcPermissions.getInstance().partyChat(player))
-    		player.sendMessage(ChatColor.GRAY+"/p - toggles party chat");
-    		player.sendMessage(ChatColor.GREEN+"/"+mcLoadProperties.stats+ChatColor.GRAY+" - Check current skill levels");
-    		if(mcPermissions.getInstance().setMySpawn(player))
-    		player.sendMessage(ChatColor.GRAY+"/"+mcLoadProperties.setmyspawn+" - Sets your spawn");
     		if(mcPermissions.getInstance().mySpawn(player)){
-    		player.sendMessage(ChatColor.GRAY+"/"+mcLoadProperties.myspawn+" - travel to myspawn, clears inventory");
-    		player.sendMessage(ChatColor.GREEN+"/"+mcLoadProperties.clearmyspawn+" - resets your myspawn to default spawn location");
+	    		player.sendMessage(ChatColor.GREEN+"--MYSPAWN COMMANDS--");
+	    		player.sendMessage("/"+mcLoadProperties.myspawn+" "+ChatColor.RED+"- Teleports you to your MySpawn");
+	    		player.sendMessage("/"+mcLoadProperties.clearmyspawn+" "+ChatColor.RED+"- Clears your MySpawn");
     		}
-    		if(mcPermissions.getInstance().whois(player) || player.isOp())
-    		player.sendMessage(ChatColor.GRAY+"/"+mcLoadProperties.whois+" - view detailed info about a player (req op)");
-    		player.sendMessage(ChatColor.GRAY+"/woodcutting - Skill info");
-    		player.sendMessage(ChatColor.GRAY+"/mining - Skill info");
-    		player.sendMessage(ChatColor.GRAY+"/repair - Skill info");
-    		player.sendMessage(ChatColor.GRAY+"/unarmed - Skill info");
-    		player.sendMessage(ChatColor.GRAY+"/herbalism - Skill info");
-    		player.sendMessage(ChatColor.GRAY+"/excavation - Skill info");
-    		player.sendMessage(ChatColor.GRAY+"/archery - Skill info");
-    		player.sendMessage(ChatColor.GRAY+"/swords - Skill info");
-    		player.sendMessage(ChatColor.GRAY+"/acrobatics - Skill info");
-    		player.sendMessage(ChatColor.GRAY+"/axes - Skill info");
-    		player.sendMessage(ChatColor.GRAY+"/invite - Invite players to your party");
-    		player.sendMessage(ChatColor.GRAY+"/accept - Accept an invite");
-    		if(mcPermissions.getInstance().mmoedit(player))
-    		player.sendMessage(ChatColor.GRAY+"/"+mcLoadProperties.mmoedit+" - Modify mcMMO skills of players/yourself");
+    		if(mcPermissions.getInstance().adminChat(player)){
+    			player.sendMessage(ChatColor.GREEN+"--ADMIN COMMANDS--");
+    			player.sendMessage("/a "+ChatColor.RED+"- Toggle admin chat");
+    		}
+    		player.sendMessage(ChatColor.GREEN+"--OTHER COMMANDS--");
+    		if(mcPermissions.getInstance().whois(player))
+    			player.sendMessage("/"+mcLoadProperties.whois+" [playername] "+ChatColor.RED+"- View detailed player info");
+    		if(mcPermissions.getInstance().mmoedit(player)){
+    			player.sendMessage("/"+mcLoadProperties.mmoedit+" [skill] [newvalue] "+ChatColor.RED+"Modify the designated skill value");
+    			player.sendMessage("/"+mcLoadProperties.mmoedit+" [playername] [skill] [newvalue] "+ChatColor.RED+"- Modify target");
+    		}
+    		if(mcPermissions.getInstance().mcgod(player))
+    			player.sendMessage("/"+mcLoadProperties.mcgod+ChatColor.RED+" - God Mode");
+    		player.sendMessage("/[skillname] "+ChatColor.RED+" View detailed information about a skill");
+    		player.sendMessage("/"+mcLoadProperties.mcmmo+" "+ChatColor.RED+"- Read brief mod description");
     	}
     }
 }

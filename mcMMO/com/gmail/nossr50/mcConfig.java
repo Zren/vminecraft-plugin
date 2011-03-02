@@ -10,7 +10,6 @@ public class mcConfig {
     String location = "mcmmo.properties";
     protected static final Logger log = Logger.getLogger("Minecraft");
     static ArrayList<String> adminChatList = new ArrayList<String>();
-    static ArrayList<String> coordsWatchList = new ArrayList<String>();
     static ArrayList<Block> blockWatchList = new ArrayList<Block>();
     static ArrayList<String> partyChatList = new ArrayList<String>();
     static ArrayList<String> godModeList = new ArrayList<String>();
@@ -18,11 +17,8 @@ public class mcConfig {
     static ArrayList<Entity> bleedTracker = new ArrayList<Entity>();
     static ArrayList<Entity> mobSpawnTracker = new ArrayList<Entity>();
     public boolean isBlockWatched(Block block) {return blockWatchList.contains(block);}
-    public boolean isCoordsWatched(String xyz) {return coordsWatchList.contains(xyz);}
     public void removeBlockWatch(Block block) {blockWatchList.remove(blockWatchList.indexOf(block));}
-    public void removeCoordsWatch(String xyz) {coordsWatchList.remove(coordsWatchList.indexOf(xyz));}
     public void addBlockWatch(Block block) {blockWatchList.add(block);}
-    public void addCoordsWatch(String xyz) {coordsWatchList.add(xyz);}
     public void addBleedTrack(Entity entity) {bleedTracker.add(entity);}
     public void addMobSpawnTrack(Entity entity) {mobSpawnTracker.add(entity);}
     public ArrayList<Entity> getBleedTracked() {return bleedTracker;}

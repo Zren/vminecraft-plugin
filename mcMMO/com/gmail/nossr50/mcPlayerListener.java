@@ -25,15 +25,14 @@ public class mcPlayerListener extends PlayerListener {
     }
     public void onPlayerRespawn(PlayerRespawnEvent event) {
     	Player player = event.getPlayer();
+    	if(player != null){
 			Location mySpawn = mcUsers.getProfile(player).getMySpawn(player);
-			if(mcUsers.getProfile(player).getMySpawnWorld() != null && !mcUsers.getProfile(player).getMySpawnWorld().equals("")){
-			if(plugin.getServer().getWorld(mcUsers.getProfile(player).getMySpawnWorld()) != null)
-			mySpawn.setWorld(plugin.getServer().getWorld(mcUsers.getProfile(player).getMySpawnWorld()));
-			}
-			if(mcPermissions.getInstance().mySpawn(player)){
-		    	if(mcUsers.getProfile(player).getMySpawn(player) != null)
+			if(plugin.getServer().getWorld(mcUsers.getProfile(player).getMySpawnWorld(plugin)) != null)
+				mySpawn.setWorld(plugin.getServer().getWorld(mcUsers.getProfile(player).getMySpawnWorld(plugin)));
+			if(mcPermissions.getInstance().mySpawn(player) && mySpawn != null){
 		    	event.setRespawnLocation(mySpawn);
 			}
+    	}
     }
     public Player[] getPlayersOnline() {
     		return plugin.getServer().getOnlinePlayers();
@@ -180,7 +179,7 @@ public class mcPlayerListener extends PlayerListener {
     		player.sendMessage("Party: "+mcUsers.getProfile(target).getParty());
     		player.sendMessage("Health: "+target.getHealth()+ChatColor.GRAY+" (20 is full health)");
     		player.sendMessage("OP: " + target.isOp());
-    		player.sendMessage(ChatColor.GREEN+"mcMMO Stats for "+ChatColor.YELLOW+player.getName());
+    		player.sendMessage(ChatColor.GREEN+"mcMMO Stats for "+ChatColor.YELLOW+target.getName());
     		if(mcPermissions.getInstance().mining(target))
     		player.sendMessage(ChatColor.YELLOW + "Mining Skill: " + ChatColor.GREEN + mcUsers.getProfile(target).getMining()+ChatColor.DARK_AQUA 
     				+ " XP("+mcUsers.getProfile(target).getMiningGather()
@@ -436,8 +435,8 @@ public class mcPlayerListener extends PlayerListener {
     		player.setHealth(20);
     		Location mySpawn = mcUsers.getProfile(player).getMySpawn(player);
     		//player.sendMessage("mcMMO DEBUG CODE 1");
-    		if(mcUsers.getProfile(player).getMySpawnWorld() != null && !mcUsers.getProfile(player).getMySpawnWorld().equals("")){
-    			mySpawn.setWorld(plugin.getServer().getWorld(mcUsers.getProfile(player).getMySpawnWorld()));
+    		if(mcUsers.getProfile(player).getMySpawnWorld(plugin) != null && !mcUsers.getProfile(player).getMySpawnWorld(plugin).equals("")){
+    			mySpawn.setWorld(plugin.getServer().getWorld(mcUsers.getProfile(player).getMySpawnWorld(plugin)));
     			//player.sendMessage("mcMMO DEBUG CODE 2");
     			} else {
     				//player.sendMessage("mcMMO DEBUG CODE 5");

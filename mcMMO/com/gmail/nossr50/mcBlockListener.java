@@ -28,8 +28,8 @@ public class mcBlockListener extends BlockListener {
     	int y = block.getY();
     	int z = block.getZ();
     	String xyz = x+","+y+","+z;
+    	if(mcm.getInstance().shouldBeWatched(block))
     	mcConfig.getInstance().addBlockWatch(block);
-    	mcConfig.getInstance().addCoordsWatch(xyz);
     	if(block.getTypeId() == 42 && mcLoadProperties.anvilmessages)
     		event.getPlayer().sendMessage(ChatColor.DARK_RED+"You have placed an anvil, anvils can repair tools and armor.");
     }
@@ -55,13 +55,13 @@ public class mcBlockListener extends BlockListener {
     		/*
     		 * MINING
     		 */
-    		if(dmg == 2 && !mcConfig.getInstance().isBlockWatched(block) && !mcConfig.getInstance().isCoordsWatched(xyz)){
+    		if(player != null && dmg == 2 && !mcConfig.getInstance().isBlockWatched(block)){
     		if(mcPermissions.getInstance().mining(player))
     		mcMining.getInstance().miningBlockCheck(player, block);
     		/*
     		 * WOOD CUTTING
     		 */
-    		if(block.getTypeId() == 17 && mcPermissions.getInstance().woodcutting(player)){    		
+    		if(player != null && block.getTypeId() == 17 && mcPermissions.getInstance().woodcutting(player)){    		
     				mcWoodCutting.getInstance().woodCuttingProcCheck(player, block, loc);
     				mcUsers.getProfile(player).addWoodcuttingGather(7);
     		}
@@ -73,9 +73,8 @@ public class mcBlockListener extends BlockListener {
     		/*
     		 * EXPLOIT COUNTERMEASURES
     		 */
-    		mcConfig.getInstance().addCoordsWatch(xyz);
     		mcConfig.getInstance().addBlockWatch(block);
-    		if(mcUsers.getProfile(player).getWoodCuttingGatherInt() >= mcUsers.getProfile(player).getXpToLevel("woodcutting")){
+    		if(player != null && mcUsers.getProfile(player).getWoodCuttingGatherInt() >= mcUsers.getProfile(player).getXpToLevel("woodcutting")){
     			int skillups = 0;
     			while(mcUsers.getProfile(player).getWoodCuttingGatherInt() >= mcUsers.getProfile(player).getXpToLevel("woodcutting")){
     				skillups++;

@@ -29,12 +29,7 @@ public class mcMMO extends JavaPlugin {
     public static PermissionHandler PermissionsHandler = null;
     private Permissions permissions;
     private Timer mcMMO_Timer = new Timer(true);
-
-    /*
-    public mcMMO(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File folder, File plugin, ClassLoader cLoader) {
-        super(pluginLoader, instance, desc, folder, plugin, cLoader);
-    }
-    */
+    
     //herp
     public void onEnable() {
     	mcMMO_Timer.schedule(new mcTimer(this), 0, (long)(2000));
@@ -69,8 +64,6 @@ public class mcMMO extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_LOGIN, playerListener, Priority.Normal, this);
-        pm.registerEvent(Event.Type.PLAYER_DROP_ITEM, playerListener, Priority.Normal, this);
-        pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Priority.Normal, this);
         pm.registerEvent(Event.Type.BLOCK_DAMAGED, blockListener, Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_CHAT, playerListener, Priority.Monitor, this);
         pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS, playerListener, Priority.High, this);

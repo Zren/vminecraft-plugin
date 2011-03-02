@@ -1,6 +1,7 @@
 package com.gmail.nossr50;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
@@ -77,15 +78,6 @@ public class mcEntityListener extends EntityListener {
         		 * PARRYING CHECK, CHECK TO SEE IF ITS A SUCCESSFUL PARRY OR NOT
         		 */
         		mcCombat.getInstance().parryCheck(defender, eventb, f);
-        		/*
-        		 * PLAYER DEATH BY MONSTER MESSAGE CHECK, CHECKS TO SEE IF TO REPORT THE DEATH OR NOT
-        		 */
-        		//mcm.getInstance().playerDeathByMonsterMessageCheck(y, defender, plugin);
-        		/*
-        		 * CHECKS IF THE PLAYER DIES, IF SO DROP HIS SHIT BECAUSE OF THE DAMAGE MODIFIERS
-        		 * MIGHT BE A BIT BUGGY, IT SEEMS TO WORK RIGHT NOW AT LEAST...
-        		 */
-
         	}
         	/*
         	 * IF ATTACKER IS PLAYER
@@ -114,6 +106,20 @@ public class mcEntityListener extends EntityListener {
         	}
         	if(f instanceof Player && e instanceof Player && !mcLoadProperties.pvp)
         		event.setCancelled(true);
+        	if(e instanceof Monster || e instanceof Animals){
+        		if(e instanceof Monster){
+        			Monster monster = (Monster)e;
+        			if(monster.getHealth() <= 0){
+        				mcConfig.getInstance().removeBleedTrack(e);
+        			}
+        		}
+        		if(e instanceof Animals){
+        			Animals animals = (Animals)e;
+        			if(animals.getHealth() <= 0){
+        				mcConfig.getInstance().removeBleedTrack(e);
+        			}
+        		}
+        	}
     	}
     }
     public void onEntityDeath(EntityDeathEvent event) {
