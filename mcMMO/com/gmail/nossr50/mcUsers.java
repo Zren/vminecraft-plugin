@@ -100,7 +100,7 @@ public class mcUsers {
 
     }
 }
-class PlayerList
+public class PlayerList
 {       
     protected static final Logger log = Logger.getLogger("Minecraft");
 	ArrayList<PlayerProfile> players;
